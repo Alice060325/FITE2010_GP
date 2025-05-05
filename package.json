@@ -1,0 +1,20 @@
+{
+    "name": "card-drawing-smart-contract",
+    "version": "1.0.0",
+    "description": "A smart contract application for a card drawing program",
+    "main": "scripts/deploy.js",
+    "scripts": {
+      "test": "mocha test/CardDrawing.test.js",
+      "start": "node scripts/interact.js"
+    },
+    "dependencies": {
+      "ethers": "^5.0.0",
+      "dotenv": "^10.0.0"
+    },
+    "devDependencies": {
+      "mocha": "^9.0.0",
+      "chai": "^4.0.0"
+    },
+    "author": "Your Name",
+    "license": "MIT"
+  }
