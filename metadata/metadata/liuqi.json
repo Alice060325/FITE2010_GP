@@ -1,0 +1,10 @@
+{
+    "name": "Liu Qi",
+    "description": "Assistant Professor; BASc(FinTech) Programme Director",
+    "image": "ipfs://bafkreidxgv5fjzdofh2vkh4j3xuqxivbqddspjz3yyq4mbq3hrql5lsrrq",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "UR" },
+      { "trait_type": "Office", "value": "CB-401C"},
+      { "trait_type": "Courses Taught", "value": "FITE2010, FITE3010" }
+    ]
+}

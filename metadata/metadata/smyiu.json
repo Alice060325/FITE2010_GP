@@ -1,0 +1,10 @@
+{
+    "name": "Yiu Siu Ming",
+    "description": "Professor; Associate Director (TPg) of CDS",
+    "image": "ipfs://bafkreif4vtfqv26il2iyuo2od77hw5fknkyxfehacp6bwt2ollp4twkxfe",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "R" },
+      { "trait_type": "Office", "value": "CB-424"},
+      { "trait_type": "Courses Taught", "value": "COMP2119" }
+    ]
+}

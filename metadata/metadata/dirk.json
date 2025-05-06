@@ -1,0 +1,10 @@
+{
+    "name": "Dirk Schnieders",
+    "description": "Senior Lecturer",
+    "image": "ipfs://bafkreic3xilye2wzbjxtlgccc7xo6egbrvg76ojgcshcb3eyiap3xyim4y",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "SR" },
+      { "trait_type": "Office", "value": "CB-324"},
+      { "trait_type": "Courses Taught", "value": "COMP3270, ENGG1330" }
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "name": "Chow Kam Pui",
+    "description": "MA, PhD UC Santa Barbara; MSc Programmes Director; MDASC Programme Coordinator; Senior Lecturer",
+    "image": "ipfs://bafkreiffdzjdbnov7ahfuw5e2be6nv4f2e7blqtluii37ri7njvv44lyme",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "N" },
+      { "trait_type": "Office", "value": "CB-408"},
+      { "trait_type": "Courses Taught", "value": "COMP2501, FITE2000, FITE4801" }
+    ]
+}
