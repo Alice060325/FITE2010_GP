@@ -1,10 +1,11 @@
 {
-    "name": "Chim Tat Wing",
-    "description": "Lecturer",
-    "image": "ipfs://bafkreifungq3zedeeagf6m6p5jte74rm6eb35hqd45m3twmm6t2jho3nf4",
-    "attributes": [
-      { "trait_type": "Rarity", "value": "SSR" },
-      { "trait_type": "Office", "value": "HW-519"},
-      { "trait_type": "Courses Taught", "value": "COMP1117, COMP2113, COMP2396, COMP3329, COMP3330, COMP3510, COMP4805, ENGG1340" }
-    ]
+  "id": "twchim",    
+  "name": "Chim Tat Wing",
+  "description": "Lecturer",
+  "image": "ipfs://bafkreifungq3zedeeagf6m6p5jte74rm6eb35hqd45m3twmm6t2jho3nf4",
+  "attributes": [
+    { "trait_type": "Rarity", "value": "SSR" },
+    { "trait_type": "Office", "value": "HW-519"},
+    { "trait_type": "Courses Taught", "value": "COMP1117, COMP2113, COMP2396, COMP3329, COMP3330, COMP3510, COMP4805, ENGG1340" }
+  ]
 }
