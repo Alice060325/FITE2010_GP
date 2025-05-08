@@ -142,11 +142,11 @@ contract CardDrawing is ERC721, Ownable {
     }
 
     function getCardImageUrl(uint256 rarity) internal pure returns (string memory) {
-        if (rarity == 1) return "https://example.com/images/legendary.png";
-        if (rarity == 2) return "https://example.com/images/rare.png";
-        if (rarity == 3) return "https://example.com/images/uncommon.png";
-        return "https://example.com/images/common.png";
-    }
+        if (rarity == 1) return "ipfs://QmExampleLegendarDragonImageHash";
+        if (rarity == 2) return "ipfs://QmExampleRarePhoenixImageHash";
+        if (rarity == 3) return "ipfs://QmExampleUncommonGriffinImageHash";
+        return "ipfs://QmExampleCommonGolemImageHash";
+    }    
 
     // Placeholder functions for mintCard by cardId
     // In a real scenario, these would fetch data from a predefined set or external source
