@@ -61,7 +61,7 @@ contract CardDrawing is ERC721, Ownable {
         // Mint the NFT to the caller
         _mint(msg.sender, newTokenId);
 
-        // Initialize card details (These can be customized or fetched from metadata)
+        // Initialize card details
         _cards[newTokenId] = Card({
             id: newTokenId,
             name: getCardName(rarity),
@@ -142,11 +142,11 @@ contract CardDrawing is ERC721, Ownable {
     }
 
     function getCardImageUrl(uint256 rarity) internal pure returns (string memory) {
-        if (rarity == 1) return "ipfs://QmExampleLegendarDragonImageHash";
-        if (rarity == 2) return "ipfs://QmExampleRarePhoenixImageHash";
-        if (rarity == 3) return "ipfs://QmExampleUncommonGriffinImageHash";
-        return "ipfs://QmExampleCommonGolemImageHash";
-    }    
+        if (rarity == 1) return "https://example.com/images/legendary.png";
+        if (rarity == 2) return "https://example.com/images/rare.png";
+        if (rarity == 3) return "https://example.com/images/uncommon.png";
+        return "https://example.com/images/common.png";
+    }
 
     // Placeholder functions for mintCard by cardId
     // In a real scenario, these would fetch data from a predefined set or external source
@@ -197,7 +197,7 @@ contract CardDrawing is ERC721, Ownable {
 
         Card memory card = _cards[tokenId];
 
-        // Example metadata JSON structure
+        // Metadata JSON
         string memory json = string(
             abi.encodePacked(
                 '{',
@@ -211,7 +211,7 @@ contract CardDrawing is ERC721, Ownable {
             )
         );
 
-        // Encode the JSON metadata in base64
+        // Encode as base64
         return string(abi.encodePacked("data:application/json;base64,", base64(bytes(json))));
     }
 
