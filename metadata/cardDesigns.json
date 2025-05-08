@@ -1,0 +1,56 @@
+[{
+  "id": "dirk",  
+  "name": "Dirk Schnieders",
+    "description": "Senior Lecturer",
+    "image": "ipfs://bafkreic3xilye2wzbjxtlgccc7xo6egbrvg76ojgcshcb3eyiap3xyim4y",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "SR" },
+      { "trait_type": "Office", "value": "CB-324"},
+      { "trait_type": "Courses Taught", "value": "COMP3270, ENGG1330" }
+    ]
+},
+{
+  "id": "kpchow",    
+  "name": "Chow Kam Pui",
+    "description": "MA, PhD UC Santa Barbara; MSc Programmes Director; MDASC Programme Coordinator; Senior Lecturer",
+    "image": "ipfs://bafkreiffdzjdbnov7ahfuw5e2be6nv4f2e7blqtluii37ri7njvv44lyme",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "N" },
+      { "trait_type": "Office", "value": "CB-408"},
+      { "trait_type": "Courses Taught", "value": "COMP2501, FITE2000, FITE4801" }
+    ]
+},
+{
+  "id": "liuqi",    
+  "name": "Liu Qi",
+    "description": "Assistant Professor; BASc(FinTech) Programme Director",
+    "image": "ipfs://bafkreidxgv5fjzdofh2vkh4j3xuqxivbqddspjz3yyq4mbq3hrql5lsrrq",
+    "attributes": [
+      { "trait_type": "Rarity", "value": "UR" },
+      { "trait_type": "Office", "value": "CB-401C"},
+      { "trait_type": "Courses Taught", "value": "FITE2010, FITE3010" }
+    ]
+},
+{
+  "id": "smyiu",    
+  "name": "Yiu Siu Ming",
+  "description": "Professor; Associate Director (TPg) of CDS",
+  "image": "ipfs://bafkreif4vtfqv26il2iyuo2od77hw5fknkyxfehacp6bwt2ollp4twkxfe",
+  "attributes": [
+    { "trait_type": "Rarity", "value": "R" },
+    { "trait_type": "Office", "value": "CB-424"},
+    { "trait_type": "Courses Taught", "value": "COMP2119" }
+  ]
+},
+{
+  "id": "twchim",    
+  "name": "Chim Tat Wing",
+  "description": "Lecturer",
+  "image": "ipfs://bafkreifungq3zedeeagf6m6p5jte74rm6eb35hqd45m3twmm6t2jho3nf4",
+  "attributes": [
+    { "trait_type": "Rarity", "value": "SSR" },
+    { "trait_type": "Office", "value": "HW-519"},
+    { "trait_type": "Courses Taught", "value": "COMP1117, COMP2113, COMP2396, COMP3329, COMP3330, COMP3510, COMP4805, ENGG1340" }
+  ]
+}
+]
