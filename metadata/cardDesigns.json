@@ -1,4 +1,5 @@
-[{
+{
+  "cards": [{
   "id": "dirk",  
   "name": "Dirk Schnieders",
     "description": "Senior Lecturer",
@@ -54,3 +55,4 @@
   ]
 }
 ]
+}
