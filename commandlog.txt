@@ -11,4 +11,4 @@ npx hardhat compile
 
 npx hardhat --network sepolia run scripts/deploy.js
 
-npx hardhat --network sepolia run scripts/mint-nft.js
+npx hardhat --network sepolia run scripts/mintCard.js
