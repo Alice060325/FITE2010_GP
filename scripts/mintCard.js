@@ -32,6 +32,12 @@ async function mintCard(cardId) {
     }
 
     try {
+        // Check ownership
+        const owner = await contractWithSigner.owner();
+        if (owner.toLowerCase() !== wallet.address.toLowerCase()) {
+            throw new Error("The wallet is not the contract owner. Only the owner can call setCardMetadata.");
+        }
+
         console.log(`Minting card with ID: ${cardId}...`);
         const tx = await contractWithSigner.mintCard(wallet.address, cardId);
         console.log(`Transaction sent: ${tx.hash}`);
@@ -102,5 +108,4 @@ async function mintCard(cardId) {
     }
 }
 
-// Example usage
 mintCard(1);
