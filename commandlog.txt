@@ -1,11 +1,16 @@
+mkdir workspace
+
+cd workspace
 
 npm init -y
 
 npm install --save-dev hardhat@2.22.19 @nomicfoundation/hardhat-toolbox @openzeppelin/contracts@4.7.3 dotenv @alch/alchemy-web3
 
+npx hardhat
+
 mkdir contracts scripts metadata test
 
-touch hardhat.config.js contracts/CardDrawing.sol metadata/cardDesigns.json scripts/config.js scripts/deploy.js scripts/interact.js scripts/mintCard.js test/CardDrawing.test.js .env
+touch hardhat.config.js contracts/CardDrawing.sol metadata/cardDesigns.json scripts/config.js scripts/deploy.js scripts/interact.js scripts/mintCard.js test/CardDrawing.test.js .env CardDrawingABI.json deployment.json package.json
 
 npx hardhat compile
 
