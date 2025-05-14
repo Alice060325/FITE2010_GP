@@ -1,129 +1,203 @@
-// test/CardDrawing.test.js
-const { expect } = require("chai");
-const { ethers } = require("hardhat");
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.18;
 
-describe("CardDrawing Contract", function () {
-    let CardDrawing, cardDrawing, owner, addr1, addr2;
+// Import OpenZeppelin ERC721 standards and utilities
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/Counters.sol";
 
-    beforeEach(async function () {
-        // Get the ContractFactory and Signers here.
-        CardDrawing = await ethers.getContractFactory("CardDrawing");
-        [owner, addr1, addr2, _] = await ethers.getSigners();
+contract CardDrawing is ERC721, Ownable {
+    using Counters for Counters.Counter;
+    Counters.Counter private _tokenIds;
 
-        // Deploy a new CardDrawing contract for each test
-        cardDrawing = await CardDrawing.deploy();
-        await cardDrawing.deployed();
-    });
+    // Struct to store card details
+    struct Card {
+        uint256 id;
+        string name;
+        string description;
+        string image;
+        string rarity;
+        string office;
+        string coursesTaught;
+    }
 
-    describe("Deployment", function () {
-        it("Should set the right owner", async function () {
-            expect(await cardDrawing.owner()).to.equal(owner.address);
-        });
+    // Mapping from token ID to Card details
+    mapping(uint256 => Card) private _cards;
 
-        it("Should have a name and symbol", async function () {
-            expect(await cardDrawing.name()).to.equal("CardDrawing");
-            expect(await cardDrawing.symbol()).to.equal("CARD");
-        });
-    });
+    // Predefined card metadata
+    mapping(uint256 => Card) private predefinedCards;
 
-    describe("Minting", function () {
-        it("Should allow the owner to mint a specific card", async function () {
-            const cardId = 1;
-            await expect(cardDrawing.mintCard(addr1.address, cardId))
-                .to.emit(cardDrawing, 'CardDrawn')
-                .withArgs(addr1.address, cardId);
+    // Event emitted when a new card is drawn
+    event CardDrawn(address indexed user, uint256 tokenId);
 
-            expect(await cardDrawing.ownerOf(cardId)).to.equal(addr1.address);
+    // Constructor to set token name and symbol, and initialize predefined cards
+    constructor() ERC721("CardDrawing", "CARD") {
+        initializePredefinedCards();
+    }
 
-            const cardDetails = await cardDrawing.getCardDetails(cardId);
-            expect(cardDetails.id).to.equal(cardId);
-            expect(cardDetails.name).to.equal(`Card #${cardId}`);
-            expect(cardDetails.description).to.equal("Description for the specific card.");
-            expect(cardDetails.image).to.equal("https://example.com/images/default.png");
-            expect(cardDetails.rarity).to.equal(4); // As per getCardRarityById
-        });
+    // Initialize predefined cards using data from cardDesigns.json
+    function initializePredefinedCards() internal {
+        predefinedCards[1] = Card(
+            1,
+            "Dirk Schnieders",
+            "Senior Lecturer",
+            "ipfs://bafkreic3xilye2wzbjxtlgccc7xo6egbrvg76ojgcshcb3eyiap3xyim4y",
+            "SR",
+            "CB-324",
+            "COMP3270, ENGG1330"
+        );
+        predefinedCards[2] = Card(
+            2,
+            "Chow Kam Pui",
+            "MA, PhD UC Santa Barbara; MSc Programmes Director; MDASC Programme Coordinator; Senior Lecturer",
+            "ipfs://bafkreiffdzjdbnov7ahfuw5e2be6nv4f2e7blqtluii37ri7njvv44lyme",
+            "N",
+            "CB-408",
+            "COMP2501, FITE2000, FITE4801"
+        );
+        predefinedCards[3] = Card(
+            3,
+            "Liu Qi",
+            "Assistant Professor; BASc(FinTech) Programme Director",
+            "ipfs://bafkreidxgv5fjzdofh2vkh4j3xuqxivbqddspjz3yyq4mbq3hrql5lsrrq",
+            "UR",
+            "CB-401C",
+            "FITE2010, FITE3010"
+        );
+        predefinedCards[4] = Card(
+            4,
+            "Yiu Siu Ming",
+            "Professor; Associate Director (TPg) of CDS",
+            "ipfs://bafkreif4vtfqv26il2iyuo2od77hw5fknkyxfehacp6bwt2ollp4twkxfe",
+            "R",
+            "CB-424",
+            "COMP2119"
+        );
+        predefinedCards[5] = Card(
+            5,
+            "Chim Tat Wing",
+            "Lecturer",
+            "ipfs://bafkreifungq3zedeeagf6m6p5jte74rm6eb35hqd45m3twmm6t2jho3nf4",
+            "SSR",
+            "HW-519",
+            "COMP1117, COMP2113, COMP2396, COMP3329, COMP3330, COMP3510, COMP4805, ENGG1340"
+        );
+    }
 
-        it("Should not allow non-owners to mint a card", async function () {
-            await expect(
-                cardDrawing.connect(addr1).mintCard(addr2.address, 2)
-            ).to.be.revertedWith("Ownable: caller is not the owner");
-        });
-    });
+    /**
+     * @dev Allows a user to draw a random card.
+     * The function generates a pseudo-random number to select a card.
+     */
+    function drawCard() public returns (uint256) {
+        // Generate a pseudo-random card ID between 1 and 5
+        uint256 cardId = uint256(
+            keccak256(
+                abi.encodePacked(block.timestamp, msg.sender, block.difficulty)
+            )
+        ) % 5 + 1; // Card IDs range from 1 to 5
 
-    describe("Drawing Cards", function () {
-        it("Should allow users to draw a card", async function () {
-            // Since randomness is involved, we can't predict the exact card details
-            const tx = await cardDrawing.connect(addr1).drawCard();
-            const receipt = await tx.wait();
+        // Increment token ID
+        _tokenIds.increment();
+        uint256 newTokenId = _tokenIds.current();
 
-            const event = receipt.events.find(event => event.event === 'CardDrawn');
-            const tokenId = event.args.tokenId;
+        // Mint the NFT to the caller
+        _mint(msg.sender, newTokenId);
 
-            expect(await cardDrawing.ownerOf(tokenId)).to.equal(addr1.address);
+        // Assign predefined card metadata to the new token
+        _cards[newTokenId] = predefinedCards[cardId];
 
-            const cardDetails = await cardDrawing.getCardDetails(tokenId);
-            expect(cardDetails.id).to.equal(tokenId);
+        emit CardDrawn(msg.sender, newTokenId);
 
-            // Validate that rarity is within allowed values
-            expect(cardDetails.rarity).to.be.within(1, 4);
+        return newTokenId;
+    }
 
-            // Validate name, description, and image based on rarity
-            const expectedName = cardDrawing.getCardName(cardDetails.rarity);
-            expect(cardDetails.name).to.equal(expectedName);
+    /**
+     * @dev Mints a specific predefined card to a specified address.
+     * Only the contract owner can call this function.
+     */
+    function mintCard(address to, uint256 cardId) public onlyOwner returns (uint256) {
+        require(predefinedCards[cardId].id != 0, "CardDrawing: Invalid card ID");
 
-            const expectedDescription = cardDrawing.getCardDescription(cardDetails.rarity);
-            expect(cardDetails.description).to.equal(expectedDescription);
+        _tokenIds.increment();
+        uint256 newTokenId = _tokenIds.current();
 
-            const expectedImage = cardDrawing.getCardImageUrl(cardDetails.rarity);
-            expect(cardDetails.image).to.equal(expectedImage);
-        });
+        _mint(to, newTokenId);
 
-        it("Should emit CardDrawn event when a card is drawn", async function () {
-            await expect(cardDrawing.connect(addr1).drawCard())
-                .to.emit(cardDrawing, 'CardDrawn')
-                .withArgs(addr1.address, 1);
-        });
-    });
+        // Assign predefined card metadata to the new token
+        _cards[newTokenId] = predefinedCards[cardId];
 
-    describe("Card Metadata", function () {
-        it("Should return correct card details for minted card", async function () {
-            const cardId = 3;
-            await cardDrawing.mintCard(addr1.address, cardId);
+        emit CardDrawn(to, newTokenId);
 
-            const cardDetails = await cardDrawing.getCardDetails(cardId);
-            expect(cardDetails.name).to.equal(`Card #${cardId}`);
-            expect(cardDetails.description).to.equal("Description for the specific card.");
-            expect(cardDetails.image).to.equal("https://example.com/images/default.png");
-            expect(cardDetails.rarity).to.equal(4);
-        });
+        return newTokenId;
+    }
 
-        it("Should allow the owner to update card metadata", async function () {
-            const cardId = 4;
-            await cardDrawing.mintCard(addr1.address, cardId);
+    /**
+     * @dev Returns the details of a specific card by token ID.
+     */
+    function getCardDetails(uint256 tokenId) public view returns (Card memory) {
+        require(_exists(tokenId), "CardDrawing: Query for nonexistent token");
+        return _cards[tokenId];
+    }
 
-            const newName = "Updated Card";
-            const newDescription = "Updated Description";
-            const newImage = "https://example.com/images/updated.png";
-            const newRarity = 2;
+    /**
+     * @dev Override tokenURI to return metadata URI based on card details.
+     */
+    function tokenURI(uint256 tokenId) public view override returns (string memory) {
+        require(_exists(tokenId), "CardDrawing: URI query for nonexistent token");
 
-            await expect(
-                cardDrawing.setCardMetadata(cardId, newName, newDescription, newImage, newRarity)
-            ).to.not.be.reverted;
+        Card memory card = _cards[tokenId];
 
-            const updatedCard = await cardDrawing.getCardDetails(cardId);
-            expect(updatedCard.name).to.equal(newName);
-            expect(updatedCard.description).to.equal(newDescription);
-            expect(updatedCard.image).to.equal(newImage);
-            expect(updatedCard.rarity).to.equal(newRarity);
-        });
+        // Metadata JSON
+        string memory json = string(
+            abi.encodePacked(
+                '{',
+                    '"name": "', card.name, '",',
+                    '"description": "', card.description, '",',
+                    '"image": "', card.image, '",',
+                    '"attributes": [',
+                        '{ "trait_type": "Rarity", "value": "', card.rarity, '" },',
+                        '{ "trait_type": "Office", "value": "', card.office, '" },',
+                        '{ "trait_type": "Courses Taught", "value": "', card.coursesTaught, '" }',
+                    ']',
+                '}'
+            )
+        );
 
-        it("Should not allow non-owners to update card metadata", async function () {
-            const cardId = 5;
-            await cardDrawing.mintCard(addr1.address, cardId);
+        // Encode as base64
+        return string(abi.encodePacked("data:application/json;base64,", base64(bytes(json))));
+    }
 
-            await expect(
-                cardDrawing.connect(addr1).setCardMetadata(cardId, "Hack", "Hack Description", "https://example.com/images/hack.png", 1)
-            ).to.be.revertedWith("Ownable: caller is not the owner");
-        });
-    });
-});
+    // Base64 encoding utility
+    string internal constant TABLE = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+
+    function base64(bytes memory data) internal pure returns (string memory) {
+        if (data.length == 0) return "";
+
+        string memory result = new string(4 * ((data.length + 2) / 3));
+        bytes memory table = bytes(TABLE);
+
+        assembly {
+            let tablePtr := add(table, 1)
+            let resultPtr := add(result, 32)
+            let dataPtr := data
+            let endPtr := add(data, mload(data))
+
+            for {} lt(dataPtr, endPtr) {}
+            {
+                dataPtr := add(dataPtr, 3)
+                let input := mload(dataPtr)
+                mstore(resultPtr, shl(248, mload(add(tablePtr, and(shr(18, input), 0x3F)))))
+                mstore(add(resultPtr, 1), shl(248, mload(add(tablePtr, and(shr(12, input), 0x3F)))))
+                mstore(add(resultPtr, 2), shl(248, mload(add(tablePtr, and(shr(6, input), 0x3F)))))
+                mstore(add(resultPtr, 3), shl(248, mload(add(tablePtr, and(input, 0x3F)))))
+                resultPtr := add(resultPtr, 4)
+            }
+
+            switch mod(mload(data), 3)
+            case 1 { mstore(sub(resultPtr, 2), shl(240, 0x3d3d)) }
+            case 2 { mstore(sub(resultPtr, 1), shl(248, 0x3d)) }
+        }
+
+        return result;
+    }
+}
