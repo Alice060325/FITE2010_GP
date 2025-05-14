@@ -4,8 +4,7 @@ cd workspace
 
 npm init -y
 
-npm install --save-dev hardhat@2.22.19 @nomicfoundation/hardhat-toolbox @openzeppelin/contracts@4.7.3 dotenv @alch/alchemy-web3
-
+npm install --save-dev hardhat@2.22.19 @nomicfoundation/hardhat-toolbox @openzeppelin/contracts@4.7.3 dotenv @alch/alchemy-web3 ethers
 npx hardhat
 
 mkdir contracts scripts metadata test
