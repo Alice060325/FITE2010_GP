@@ -63,8 +63,11 @@ In the .env file, replace the Private Key and Public Key with the ones of your M
 Compile contracts:
 npx hardhat compile
 
-Deploy to a testnet (e.g., Sepolia):
-npx hardhat run scripts/interact.js
+Deploy to a testnet:
+npx hardhat --network sepolia run scripts/deploy.js
+
+To mint a Card:
+mintCard(int i), where int i = 1-5 
 
 Go to your MetaMask wallet and import the card as an NFT.
 
@@ -89,12 +92,3 @@ PRNG is used for randomness.
 Developed by Chow Yan Lok Annette, Fok Ching Yin, Ye Wing Kwan
 
 Inspired by Pokemon TCG App
-
-# Executive Overview: Project Demonstration
-- Running mintCard.js and interact.js
-![PHOTO-2025-05-15-11-02-10](https://github.com/user-attachments/assets/ee237c2c-e729-4a80-a0a4-d388efe68496)
-![PHOTO-2025-05-15-11-02-11](https://github.com/user-attachments/assets/7313fb12-de00-4a58-92c2-562bcff719aa)
-- Result
-![PHOTO-2025-05-15-11-02-20](https://github.com/user-attachments/assets/1cdfcfa9-5f30-4b73-8dee-1e2b6fed045b)
-
-
