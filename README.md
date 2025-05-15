@@ -66,8 +66,11 @@ npx hardhat compile
 Deploy to a testnet:
 npx hardhat --network sepolia run scripts/deploy.js
 
-To mint a Card:
-mintCard(int i), where int i = 1-5 
+npx hardhat --network sepolia run scripts/mintCard.js
+
+npx hardhat node
+
+npx hardhat --network sepolia run scripts/testDrawCard.js
 
 Go to your MetaMask wallet and import the card as an NFT.
 
