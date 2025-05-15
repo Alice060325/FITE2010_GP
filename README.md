@@ -68,25 +68,12 @@ npx hardhat --network sepolia run scripts/deploy.js
 
 npx hardhat --network sepolia run scripts/mintCard.js
 
-npx hardhat node
-
 To show the details of each card:
 npx hardhat --network sepolia run scripts/interact.js
 
 Go to your MetaMask wallet and import the card as an NFT.
 
 You can use Etherscan to verify your transactions, here is an example of ours when developing the game: https://sepolia.etherscan.io/address/0x4C3BB5c4C6D5B2c0F20074C468F73B5B7b9ad466
-
-📜 Smart Contract Details
-Card Rarity Distribution:
-
-N, R: 50%
-
-SR: 30%
-
-SSR: 15%
-
-UR: 5%
 
 🔒 Security & Audits
 OpenZeppelin contracts for secure NFT implementation.
