@@ -17,6 +17,8 @@ npx hardhat --network sepolia run scripts/deploy.js
 
 npx hardhat --network sepolia run scripts/mintCard.js
 
+npx hardhat --network sepolia run scripts/interact.js
+
 npx hardhat node
 
 npx hardhat --network sepolia run scripts/testDrawCard.js
